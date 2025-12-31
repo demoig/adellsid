@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adel Academy | الأستاذ عادل الصيد</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    animation: {
+                        'spin-slow': 'spin 15s linear infinite',
+                        'blob': 'blob 10s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95)',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(60px, -90px) scale(1.2)' },
+                            '66%': { transform: 'translate(-50px, 50px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .math-bg {
+            background-image: url("data:image/svg+xml,%3Csvg width='500' height='500' viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%234f46e5' fill-opacity='0.6' font-family='serif' font-size='18' font-weight='bold'%3E%3Ctext x='50' y='60'%3E∫ f(x) dx%3C/text%3E%3Ctext x='350' y='100'%3EE=mc²%3C/text%3E%3Ctext x='180' y='150'%3E∑ n=1%3C/text%3E%3Ctext x='400' y='280'%3Esin(θ)%3C/text%3E%3Ctext x='60' y='350'%3EΔx·Δp≥h/4π%3C/text%3E%3Ctext x='380' y='420'%3E∞%3C/text%3E%3Ctext x='200' y='450'%3E√-1 = i%3C/text%3E%3Ctext x='120' y='250'%3Eπ ≈ 3.1415%3C/text%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .reveal-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dark .glass {
+            background: rgba(10, 15, 30, 0.6);
+        }
+    </style>
+</head>
+<body class="transition-colors duration-700 relative overflow-x-hidden bg-[#f8fafc] text-slate-900 dark:bg-[#0a0f1e] dark:text-slate-100">
+
+    <!-- Background Layers -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="absolute inset-0 opacity-[0.1] dark:opacity-[0.2]" style="background-image: linear-gradient(#4f46e5 1px, transparent 1px), linear-gradient(90deg, #4f46e5 1px, transparent 1px); background-size: 40px 40px;"></div>
+        <div class="absolute inset-0 opacity-[0.15] dark:opacity-[0.25] math-bg dark:invert transition-opacity duration-700"></div>
+        <div class="absolute top-[-5%] left-[-5%] w-[100%] lg:w-[60%] h-[60%] bg-indigo-600/15 dark:bg-indigo-500/25 rounded-full blur-[160px] animate-blob"></div>
+        <div class="absolute bottom-[-5%] right-[-5%] w-[100%] lg:w-[60%] h-[60%] bg-purple-600/15 dark:bg-purple-500/25 rounded-full blur-[160px] animate-blob" style="animation-delay: 2s;"></div>
+    </div>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/213671520799" target="_blank" class="fixed bottom-6 left-6 z-50 bg-green-500 text-white p-3 md:p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all animate-bounce">
+        <i data-lucide="message-circle" class="w-6 h-6"></i>
+    </a>
+
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 py-3 md:py-6 bg-transparent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 flex justify-between items-center">
+            <div class="flex items-center gap-3 cursor-pointer group" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                <div class="w-10 h-10 md:w-12 md:h-12 bg-indigo-600 rounded-lg md:rounded-2xl flex items-center justify-center text-white shadow-lg group-hover:rotate-12 transition-transform">
+                    <i data-lucide="book-open" class="w-6 h-6"></i>
+                </div>
+                <span class="text-xl md:text-2xl font-black tracking-tight uppercase">Adel Academy</span>
+            </div>
+
+            <!-- Desktop Nav -->
+            <div class="hidden lg:flex items-center gap-8 font-bold">
+                <a href="#home" class="hover:text-indigo-600 transition-colors uppercase text-sm tracking-widest">الرئيسية</a>
+                <a href="#courses" class="hover:text-indigo-600 transition-colors uppercase text-sm tracking-widest">الدورات</a>
+                <a href="#testimonials" class="hover:text-indigo-600 transition-colors uppercase text-sm tracking-widest">آراء الطلاب</a>
+                <a href="#faq" class="hover:text-indigo-600 transition-colors uppercase text-sm tracking-widest">الأسئلة</a>
+                <button onclick="toggleDarkMode()" class="p-2.5 rounded-xl hover:bg-white/20 dark:hover:bg-slate-800 transition-all transform hover:scale-110">
+                    <i id="theme-icon" data-lucide="moon" class="w-5 h-5 text-slate-600 dark:text-yellow-400"></i>
+                </button>
+                <button onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" class="bg-indigo-600 text-white px-7 py-2.5 rounded-xl hover:bg-indigo-700 transition-all shadow-md active:scale-95">سجل الآن</button>
+            </div>
+
+            <!-- Mobile Actions -->
+            <div class="flex lg:hidden items-center gap-4">
+                <button onclick="toggleDarkMode()" class="p-2">
+                    <i id="theme-icon-mobile" data-lucide="moon" class="w-6 h-6 text-slate-600 dark:text-yellow-400"></i>
+                </button>
+                <button onclick="toggleMobileMenu()" class="p-1 text-inherit">
+                    <i id="menu-icon" data-lucide="menu" class="w-7 h-7"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white dark:bg-[#0a0f1e] shadow-2xl border-t dark:border-slate-800 py-8 px-6 flex flex-col gap-6 font-bold text-right origin-top animate-slide-down">
+            <a href="#home" onclick="toggleMobileMenu()">الرئيسية</a>
+            <a href="#courses" onclick="toggleMobileMenu()">الدورات</a>
+            <a href="#testimonials" onclick="toggleMobileMenu()">آراء الطلاب</a>
+            <a href="#faq" onclick="toggleMobileMenu()">الأسئلة الشائعة</a>
+            <button onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'}); toggleMobileMenu()" class="bg-indigo-600 text-white py-4 rounded-xl mt-4 shadow-lg">ابدأ التعلم الآن</button>
+        </div>
+    </nav>
+
+    <main class="relative z-10">
+        <!-- Hero Section - Restructured for Mobile Order -->
+        <section id="home" class="pt-32 md:pt-56 pb-12 md:pb-24 px-4 sm:px-8 lg:px-12">
+            <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 md:gap-24">
+                
+                <!-- Main Content Container -->
+                <div class="flex-1 space-y-6 md:space-y-10 text-center lg:text-right">
+                    <!-- Tagline (Top) -->
+                    <div class="inline-flex items-center gap-2 px-5 py-2 bg-indigo-600/15 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300 rounded-2xl text-xs md:text-sm font-black tracking-widest uppercase backdrop-blur-md border border-indigo-600/30">
+                        <i data-lucide="atom" class="w-5 h-5 animate-spin-slow"></i> مَنصة الأستاذ الرسمية
+                    </div>
+
+                    <!-- Title -->
+                    <h1 class="text-4xl sm:text-6xl lg:text-8xl font-black leading-[1.1] tracking-tight animate-slide-up">
+                        تعلم بذكاء مع <br>
+                        <span class="text-indigo-600">عادل الصيد</span>
+                    </h1>
+
+                    <!-- Image for Mobile ONLY (Hidden on Desktop) -->
+                    <div class="lg:hidden relative group w-full max-w-[280px] mx-auto py-4">
+                        <div class="absolute -inset-4 bg-gradient-to-tr from-indigo-600 via-purple-600 to-cyan-500 rounded-[2.5rem] blur-2xl opacity-30"></div>
+                        <div class="relative p-1.5 rounded-[2.5rem] bg-white/20 dark:bg-slate-900/20 backdrop-blur-md border border-white/30 shadow-2xl overflow-hidden">
+                            <img src="https://i.ibb.co/x8qdQmPV/adel-sid.jpg" alt="عادل الصيد" class="relative rounded-[2rem] w-full h-auto object-cover">
+                        </div>
+                    </div>
+
+                    <!-- Description (Below Image on Mobile) -->
+                    <p class="text-base md:text-xl opacity-80 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-medium">
+                        أهلاً بكم في منصتي التعليمية. أنا الأستاذ عادل الصيد، أمتلك خبرة تزيد عن 10 سنوات في تبسيط العلوم الرياضية والفيزيائية. هدفي هو مساعدة الطلاب على فهم القوانين بعمق وتحويل التحديات الدراسية إلى نجاحات.
+                    </p>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row flex-wrap gap-4 justify-center lg:justify-start pt-2">
+                        <button onclick="document.getElementById('courses').scrollIntoView({behavior:'smooth'})" class="bg-indigo-600 text-white px-8 py-4 rounded-3xl font-black text-lg md:text-xl hover:scale-105 active:scale-95 transition-all shadow-xl shadow-indigo-500/40">
+                            تصفح الدورات <i data-lucide="chevron-right" class="w-6 h-6 inline-block mr-2 transform rotate-180"></i>
+                        </button>
+                        <button onclick="document.getElementById('faq').scrollIntoView({behavior:'smooth'})" class="backdrop-blur-xl bg-white/10 dark:bg-white/5 border-2 border-slate-200 dark:border-slate-800 px-8 py-4 rounded-3xl font-black text-lg md:text-xl active:scale-95 transition-all">الأسئلة الشائعة</button>
+                    </div>
+                </div>
+
+                <!-- Desktop Image (Hidden on Mobile) -->
+                <div class="hidden lg:block flex-1 animate-fade-in relative group lg:max-w-xl">
+                    <div class="absolute -inset-8 bg-gradient-to-tr from-indigo-600 via-purple-600 to-cyan-500 rounded-[4rem] blur-3xl opacity-30 group-hover:opacity-50 transition-opacity duration-1000 animate-pulse"></div>
+                    <div class="relative p-2.5 rounded-[4rem] bg-white/20 dark:bg-slate-900/20 backdrop-blur-md border border-white/30 shadow-2xl overflow-hidden">
+                        <img src="https://i.ibb.co/x8qdQmPV/adel-sid.jpg" alt="عادل الصيد" class="relative rounded-[3.5rem] w-full h-auto object-cover transition-transform duration-1000 group-hover:scale-105">
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-8 md:py-20 reveal px-4">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-12 p-6 md:p-16 rounded-[2.5rem] md:rounded-[4rem] border glass transition-all">
+                    <div class="flex flex-col items-center text-center space-y-3 p-2 group">
+                        <div class="w-14 h-14 md:w-20 md:h-20 bg-indigo-600/10 rounded-2xl flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500 shadow-inner">
+                            <i data-lucide="users" class="w-8 h-8 md:w-10 md:h-10"></i>
+                        </div>
+                        <div class="text-3xl md:text-6xl font-black tracking-tighter" data-target="5000">0</div>
+                        <div class="text-xs md:text-lg font-bold opacity-60 uppercase tracking-widest">طالب مستفيد</div>
+                    </div>
+                    <div class="flex flex-col items-center text-center space-y-3 p-2 group">
+                        <div class="w-14 h-14 md:w-20 md:h-20 bg-indigo-600/10 rounded-2xl flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500 shadow-inner">
+                            <i data-lucide="award" class="w-8 h-8 md:w-10 md:h-10"></i>
+                        </div>
+                        <div class="text-3xl md:text-6xl font-black tracking-tighter" data-target="10">0</div>
+                        <div class="text-xs md:text-lg font-bold opacity-60 uppercase tracking-widest">سنة خبرة</div>
+                    </div>
+                    <div class="flex flex-col items-center text-center space-y-3 p-2 group">
+                        <div class="w-14 h-14 md:w-20 md:h-20 bg-indigo-600/10 rounded-2xl flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500 shadow-inner">
+                            <i data-lucide="book-open" class="w-8 h-8 md:w-10 md:h-10"></i>
+                        </div>
+                        <div class="text-3xl md:text-6xl font-black tracking-tighter" data-target="25">0</div>
+                        <div class="text-xs md:text-lg font-bold opacity-60 uppercase tracking-widest">دورة تدريبية</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Courses Section -->
+        <section id="courses" class="py-12 md:py-24 px-4 sm:px-8 lg:px-12 reveal">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-12 space-y-4">
+                    <div class="flex justify-center mb-2 text-indigo-600"><i data-lucide="binary" class="w-10 h-10 md:w-12 md:h-12"></i></div>
+                    <h2 class="text-3xl md:text-6xl font-black tracking-tight">الدورات التعليمية</h2>
+                    <div class="h-1.5 w-24 bg-indigo-600 mx-auto rounded-full shadow-[0_0_20px_rgba(79,70,229,0.8)]"></div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+                    <!-- Course 1 -->
+                    <div class="group rounded-[2.5rem] md:rounded-[3rem] overflow-hidden border glass transition-all duration-700 hover:-translate-y-4 shadow-xl">
+                        <div class="h-56 md:h-72 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=600" alt="Math" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                            <div class="absolute top-6 right-6 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-4 py-1.5 rounded-xl text-[10px] md:text-sm font-black text-indigo-600 uppercase tracking-widest shadow-lg">بكالوريا 2026</div>
+                        </div>
+                        <div class="p-8 space-y-6">
+                            <div class="flex items-center gap-4">
+                                <div class="p-3 bg-indigo-600/10 rounded-2xl text-indigo-600"><i data-lucide="calculator"></i></div>
+                                <h3 class="text-xl md:text-2xl font-black group-hover:text-indigo-600 transition-colors">رياضيات باك 2026</h3>
+                            </div>
+                            <button onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" class="w-full py-4 md:py-5 bg-slate-950 dark:bg-indigo-600 text-white rounded-[1.2rem] md:rounded-[1.5rem] font-black text-base md:text-xl hover:opacity-90 transition-all shadow-xl shadow-indigo-600/10">انضم إلينا الآن</button>
+                        </div>
+                    </div>
+                    <!-- Course 2 -->
+                    <div class="group rounded-[2.5rem] md:rounded-[3rem] overflow-hidden border glass transition-all duration-700 hover:-translate-y-4 shadow-xl">
+                        <div class="h-56 md:h-72 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?auto=format&fit=crop&q=80&w=600" alt="Physics" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                            <div class="absolute top-6 right-6 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-4 py-1.5 rounded-xl text-[10px] md:text-sm font-black text-indigo-600 uppercase tracking-widest shadow-lg">بكالوريا 2026</div>
+                        </div>
+                        <div class="p-8 space-y-6">
+                            <div class="flex items-center gap-4">
+                                <div class="p-3 bg-indigo-600/10 rounded-2xl text-indigo-600"><i data-lucide="zap"></i></div>
+                                <h3 class="text-xl md:text-2xl font-black group-hover:text-indigo-600 transition-colors">فيزياء باك 2026</h3>
+                            </div>
+                            <button onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" class="w-full py-4 md:py-5 bg-slate-950 dark:bg-indigo-600 text-white rounded-[1.2rem] md:rounded-[1.5rem] font-black text-base md:text-xl hover:opacity-90 transition-all shadow-xl shadow-indigo-600/10">انضم إلينا الآن</button>
+                        </div>
+                    </div>
+                    <!-- Course 3 -->
+                    <div class="group rounded-[2.5rem] md:rounded-[3rem] overflow-hidden border glass transition-all duration-700 hover:-translate-y-4 shadow-xl">
+                        <div class="h-56 md:h-72 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=600" alt="Languages" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                            <div class="absolute top-6 right-6 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-4 py-1.5 rounded-xl text-[10px] md:text-sm font-black text-indigo-600 uppercase tracking-widest shadow-lg">بكالوريا 2026</div>
+                        </div>
+                        <div class="p-8 space-y-6">
+                            <div class="flex items-center gap-4">
+                                <div class="p-3 bg-indigo-600/10 rounded-2xl text-indigo-600"><i data-lucide="languages"></i></div>
+                                <h3 class="text-xl md:text-2xl font-black group-hover:text-indigo-600 transition-colors">لغات اجنبية باك 2026</h3>
+                            </div>
+                            <button onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" class="w-full py-4 md:py-5 bg-slate-950 dark:bg-indigo-600 text-white rounded-[1.2rem] md:rounded-[1.5rem] font-black text-base md:text-xl hover:opacity-90 transition-all shadow-xl shadow-indigo-600/10">انضم إلينا الآن</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="py-12 md:py-24 px-4 sm:px-8 lg:px-12 reveal">
+            <div class="max-w-7xl mx-auto text-center">
+                <div class="mb-12 md:mb-16 space-y-4">
+                    <h2 class="text-3xl md:text-6xl font-black tracking-tight">ماذا يقول طلابنا؟</h2>
+                    <p class="opacity-60 font-bold tracking-widest uppercase text-xs md:text-lg text-indigo-600">آراء حقيقية من المسجلين في الأكاديمية</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12">
+                    <div class="p-8 md:p-12 rounded-[2.5rem] border glass hover:shadow-2xl transition-all relative">
+                        <i data-lucide="quote" class="absolute top-6 left-6 w-10 h-10 text-indigo-600/10"></i>
+                        <div class="flex justify-center gap-1 mb-6 text-yellow-400"><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i></div>
+                        <p class="italic text-base md:text-xl font-medium leading-relaxed">"بفضل شرح الأستاذ عادل، استطعت الحصول على الدرجة الكاملة في الفيزياء بعد أن كانت أصعب مادة بالنسبة لي."</p>
+                    </div>
+                    <div class="p-8 md:p-12 rounded-[2.5rem] border glass hover:shadow-2xl transition-all relative">
+                        <i data-lucide="quote" class="absolute top-6 left-6 w-10 h-10 text-indigo-600/10"></i>
+                        <div class="flex justify-center gap-1 mb-6 text-yellow-400"><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i></div>
+                        <p class="italic text-base md:text-xl font-medium leading-relaxed">"أسلوب التبسيط في الرياضيات مذهل، الأكاديمية وفرت لنا كل المصادر التي نحتاجها للمذاكرة بذكاء."</p>
+                    </div>
+                    <div class="p-8 md:p-12 rounded-[2.5rem] border glass hover:shadow-2xl transition-all relative">
+                        <i data-lucide="quote" class="absolute top-6 left-6 w-10 h-10 text-indigo-600/10"></i>
+                        <div class="flex justify-center gap-1 mb-6 text-yellow-400"><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i></div>
+                        <p class="italic text-base md:text-xl font-medium leading-relaxed">"الدورات المسجلة بجودة عالية جداً وتغني عن الدروس الخصوصية التقليدية. تجربة تعليمية فريدة."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="py-12 md:py-24 px-4 sm:px-8 lg:px-12 reveal max-w-4xl mx-auto text-right">
+            <div class="text-center mb-12 space-y-4">
+                <h2 class="text-3xl md:text-6xl font-black tracking-tight text-indigo-600">أسئلة شائعة</h2>
+                <p class="opacity-70 text-sm md:text-lg font-medium">كل ما تود معرفته عن الأكاديمية</p>
+            </div>
+            <div class="space-y-4 md:space-y-6">
+                <!-- FAQ 1 -->
+                <div class="rounded-2xl md:rounded-[2.5rem] border glass overflow-hidden transition-all duration-500">
+                    <button onclick="toggleFaq(0)" class="w-full p-6 md:p-10 flex justify-between items-center text-right font-black text-lg md:text-2xl group">
+                        <span>كيف يمكنني الاشتراك في الدورات؟</span>
+                        <div id="faq-icon-0" class="p-2 md:p-3 rounded-xl md:rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 transition-all duration-500">
+                            <i data-lucide="chevron-down" class="w-5 h-5 md:w-8 md:h-8"></i>
+                        </div>
+                    </button>
+                    <div id="faq-content-0" class="hidden p-6 md:p-10 pt-0 opacity-80 leading-relaxed text-sm md:text-xl font-medium border-t border-indigo-100/20 dark:border-slate-800 mt-2">
+                        يمكنك الاشتراك مباشرة من خلال الضغط على زر 'انضم إلينا الآن'، أو التواصل معنا عبر الواتساب لتلقي تفاصيل الدفع والولوج.
+                    </div>
+                </div>
+                <!-- FAQ 2 -->
+                <div class="rounded-2xl md:rounded-[2.5rem] border glass overflow-hidden transition-all duration-500">
+                    <button onclick="toggleFaq(1)" class="w-full p-6 md:p-10 flex justify-between items-center text-right font-black text-lg md:text-2xl group">
+                        <span>هل الدروس مباشرة أم مسجلة؟</span>
+                        <div id="faq-icon-1" class="p-2 md:p-3 rounded-xl md:rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 transition-all duration-500">
+                            <i data-lucide="chevron-down" class="w-5 h-5 md:w-8 md:h-8"></i>
+                        </div>
+                    </button>
+                    <div id="faq-content-1" class="hidden p-6 md:p-10 pt-0 opacity-80 leading-relaxed text-sm md:text-xl font-medium border-t border-indigo-100/20 dark:border-slate-800 mt-2">
+                        نوفر كلا النوعين؛ حصص مباشرة للتفاعل والأسئلة، ودورات مسجلة للمراجعة في أي وقت وبجودة عالية جداً.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-16 md:py-24 px-4 sm:px-8 lg:px-12 reveal">
+            <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 md:gap-24 items-center">
+                <div class="flex-1 space-y-8 text-center lg:text-right">
+                    <h2 class="text-4xl md:text-7xl font-black leading-tight text-indigo-600">لنبدأ رحلة <br class="hidden lg:block"> النجاح معاً</h2>
+                    <p class="text-base md:text-2xl opacity-80 leading-relaxed font-medium">نحن متاحون دائماً للإجابة على تساؤلاتكم وتوجيهكم نحو الطريق الصحيح للتفوق.</p>
+                    <div class="flex flex-col gap-5 max-w-md mx-auto lg:mx-0">
+                        <div class="flex items-center gap-4 p-5 rounded-2xl glass shadow-xl">
+                            <div class="w-12 h-12 md:w-14 md:h-14 bg-indigo-600 rounded-2xl flex items-center justify-center text-white shadow-lg"><i data-lucide="mail" class="w-6 h-6 md:w-7 md:h-7"></i></div>
+                            <div class="text-right overflow-hidden">
+                                <div class="text-[10px] opacity-50 font-black uppercase tracking-widest">تواصل عبر</div>
+                                <div class="font-black text-sm md:text-xl truncate">adel@academy.com</div>
+                            </div>
+                        </div>
+                        <a href="https://wa.me/213671520799" target="_blank" class="flex items-center gap-4 p-5 rounded-2xl glass shadow-xl hover:scale-105 transition-transform group no-underline text-inherit">
+                            <div class="w-12 h-12 md:w-14 md:h-14 bg-green-500 rounded-2xl flex items-center justify-center text-white shadow-lg group-hover:animate-pulse"><i data-lucide="message-circle" class="w-6 h-6 md:w-7 md:h-7"></i></div>
+                            <div class="text-right">
+                                <div class="text-[10px] opacity-50 font-black uppercase tracking-widest">واتساب مباشر</div>
+                                <div class="font-black text-sm md:text-xl">+213 671 52 07 99</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="w-full lg:flex-1 p-8 md:p-16 rounded-[2.5rem] md:rounded-[5rem] border glass shadow-2xl">
+                    <div id="contact-success" class="hidden text-center py-16 animate-bounce">
+                        <i data-lucide="check-circle-2" class="w-20 h-20 text-green-500 mx-auto mb-8"></i>
+                        <h3 class="text-3xl md:text-4xl font-black mb-4 text-indigo-600">تم الاستلام!</h3>
+                        <p class="text-lg md:text-xl opacity-70 font-medium">سيتواصل معك الأستاذ عادل قريباً.</p>
+                    </div>
+                    <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-6 md:space-y-10">
+                        <div class="space-y-3 md:space-y-4 text-right">
+                            <label class="text-xs md:text-sm font-black uppercase opacity-50 mr-4 tracking-widest">الاسم الكامل</label>
+                            <input required type="text" class="w-full p-4 md:p-6 rounded-2xl md:rounded-3xl outline-none focus:ring-4 focus:ring-indigo-600/20 transition-all font-bold text-base md:text-2xl bg-white/10 dark:bg-slate-800/40" placeholder="اكتب اسمك هنا">
+                        </div>
+                        <div class="space-y-3 md:space-y-4 text-right">
+                            <label class="text-xs md:text-sm font-black uppercase opacity-50 mr-4 tracking-widest">رسالتك الخاصة</label>
+                            <textarea required rows="4" class="w-full p-4 md:p-6 rounded-2xl md:rounded-3xl outline-none focus:ring-4 focus:ring-indigo-600/20 transition-all font-bold text-base md:text-2xl resize-none bg-white/10 dark:bg-slate-800/40" placeholder="كيف يمكننا مساعدتك اليوم؟"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-5 md:py-8 bg-indigo-600 text-white rounded-[1.5rem] md:rounded-[2rem] font-black text-lg md:text-3xl hover:bg-indigo-700 active:scale-[0.98] transition-all shadow-xl shadow-indigo-600/20">
+                            إرسال الآن <i data-lucide="send" class="w-6 h-6 md:w-8 md:h-8 inline-block mr-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-12 md:py-24 border-t relative z-10 transition-colors bg-white dark:bg-slate-950 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 text-center space-y-10 md:space-y-12">
+            <div class="flex items-center justify-center gap-3 opacity-80">
+                <div class="w-10 h-10 md:w-12 md:h-12 bg-indigo-600 rounded-xl flex items-center justify-center text-white shrink-0 shadow-lg"><i data-lucide="book-open" class="w-6 h-6 md:w-7 md:h-7"></i></div>
+                <span class="text-xl md:text-4xl font-black tracking-tighter uppercase">Adel Academy</span>
+            </div>
+            <div class="flex justify-center gap-8 md:gap-16">
+                <a href="#" class="hover:text-indigo-600 hover:scale-125 transition-all duration-300"><i data-lucide="twitter" class="w-7 h-7 md:w-10 md:h-10"></i></a>
+                <a href="#" class="hover:text-indigo-600 hover:scale-125 transition-all duration-300"><i data-lucide="linkedin" class="w-7 h-7 md:w-10 md:h-10"></i></a>
+                <a href="https://wa.me/213671520799" class="hover:text-green-500 hover:scale-125 transition-all duration-300"><i data-lucide="message-circle" class="w-7 h-7 md:w-10 md:h-10"></i></a>
+            </div>
+            <div class="pt-8 md:pt-10 border-t border-slate-100 dark:border-slate-900 max-w-2xl mx-auto">
+                <p class="text-[10px] md:text-sm font-black uppercase tracking-[0.3em] md:tracking-[0.5em] opacity-40 leading-loose">© 2026 Adel Academy. All rights reserved. <br> صُنع بكل شغف لدعم المسيرة التعليمية.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            html.classList.toggle('dark');
+            const isDark = html.classList.contains('dark');
+            updateIcons(isDark);
+        }
+
+        function updateIcons(isDark) {
+            const icons = [document.getElementById('theme-icon'), document.getElementById('theme-icon-mobile')];
+            icons.forEach(icon => {
+                icon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
+                icon.className = `w-6 h-6 ${isDark ? 'text-yellow-400' : 'text-slate-600'}`;
+            });
+            lucide.createIcons();
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            menu.classList.toggle('hidden');
+            const isHidden = menu.classList.contains('hidden');
+            icon.setAttribute('data-lucide', isHidden ? 'menu' : 'x');
+            lucide.createIcons();
+        }
+
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('py-3', 'md:py-4', 'bg-white/70', 'dark:bg-[#0a0f1e]/80', 'backdrop-blur-xl', 'shadow-lg', 'border-b', 'dark:border-slate-800');
+                nav.classList.remove('py-6', 'md:py-8', 'bg-transparent');
+            } else {
+                nav.classList.remove('py-3', 'md:py-4', 'bg-white/70', 'dark:bg-[#0a0f1e]/80', 'backdrop-blur-xl', 'shadow-lg', 'border-b', 'dark:border-slate-800');
+                nav.classList.add('py-6', 'md:py-8', 'bg-transparent');
+            }
+        });
+
+        function toggleFaq(index) {
+            const content = document.getElementById(`faq-content-${index}`);
+            const icon = document.getElementById(`faq-icon-${index}`);
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+            icon.classList.toggle('bg-indigo-600');
+            icon.classList.toggle('text-white');
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            document.getElementById('contact-form').classList.add('hidden');
+            document.getElementById('contact-success').classList.remove('hidden');
+        }
+
+        function animateCounters() {
+            const counters = document.querySelectorAll('[data-target]');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                let current = 0;
+                const increment = target / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.innerText = target + (target >= 100 ? '+' : '');
+                        clearInterval(timer);
+                    } else {
+                        counter.innerText = Math.ceil(current);
+                    }
+                }, 40);
+            });
+        }
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal-visible');
+                    if (entry.target.querySelector('[data-target]')) animateCounters();
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>
